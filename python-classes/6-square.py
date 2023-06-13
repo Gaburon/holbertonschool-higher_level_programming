@@ -1,50 +1,50 @@
 #!/usr/bin/python3
-"""Define a class square"""
+""" Square - First python classes's class """
 
 
 class Square:
-    """Defines a square"""
+    """ Init method to instiantiate """
     def __init__(self, size=0, position=(0, 0)):
-        self.__size = size
+        self.size = size
         self.position = position
 
     @property
     def size(self):
-        """Size - Square size"""
-        return self.__size
+        """ Size - Square's size """
+        return self._size
 
-    """Size setter"""
     @size.setter
     def size(self, value):
-        if type(value) != int:
+        if (isinstance(value, int) is False):
             raise TypeError("size must be an integer")
-        elif value <= 0:
+        elif (value < 0):
             raise ValueError("size must be >= 0")
         else:
-            self.__size = value
+            self._size = value
 
-    """position - (x, y) to print square"""
     @property
     def position(self):
-        return self.__position
+        """ Position - (x, y) tuple to print the square on """
+        return self._position
 
     @position.setter
-    def position(self):
+    def position(self, value):
         if isinstance(value, tuple) is False or len(value) != 2\
                 or isinstance(value[0], int) is False\
                 or isinstance(value[1], int) is False\
                 or value[0] < 0 or value[1] < 0:
             raise TypeError("position must be a tuple of 2 positive integers")
         else:
-            self.__position = value
+            self._position = value
 
-    """return the area of the square"""
+    """ Area - Calcs the area of the square """
     def area(self):
-        return self.__size**2
+        area = self.size ** 2
+        return area
 
-    """Prints square"""
+    """ My print - Prints the square using # at given position """
     def my_print(self):
-        if self.size == 0:
+        if (self.size == 0):
             print()
         else:
             for y in range(self.position[1]):
@@ -54,4 +54,4 @@ class Square:
                     print(" ", end="")
                 for length in range(self.size):
                     print("#", end="")
-            print()
+                print()
