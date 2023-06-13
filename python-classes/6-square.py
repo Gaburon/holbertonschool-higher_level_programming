@@ -36,7 +36,7 @@ class Square:
                 or value[0] < 0 or value[1] < 0:
             raise TypeError("position must be a tuple of 2 positive integers")
         else:
-            self._position = value
+            self.__position = value
 
     """return the area of the square"""
     def area(self):
