@@ -1,79 +1,73 @@
-=====================
-Module: 0-add_integer
-=====================
+======================
+0. Add integer module
+======================
+Function
+========
+Function to add two integers, a and b, these must be integers or floats, otherwise
+raise a TypeError exception.
 
-Numbers
-=======
-
-``add_integer()`` returns the sum of its two arguments, which is
-equivalent to using the ``+`` operator
-
-::
+Import module:
+======================
 
     >>> add_integer = __import__('0-add_integer').add_integer
-    >>> add_integer(1, 2)
-    3
 
-    >>> add_integer(100, -2)
-    98
+======================
+Should return the sum of two integers:
+    >>> add_integer(5, 6)
+    11
 
-    >>> add_integer(2)
-    100
+Should return an integer (check type):
+    >>> type(add_integer(-3.465446789, -4.83349889)) == int
+    True
 
-    >>> add_integer(100.3, -2)
-    98
+Should return the sum of a = float and b = int:
+    >>> add_integer(3.2, 4)
+    7
 
-Non-Numbers
-===========
+Should return the sum of a = int and b = float:
+    >>> add_integer(5, 4.6)
+    9
 
-``add_integer()`` is not defined for data types other than int and float,
-and should raise a ``TypeError`` upon recieving an invalid type
+Should return the sum of a = int and b = 98:
+    >>> add_integer(10)
+    108
 
-::
+Should return the sum of a = 2 and b = -2:
+    >>> add_integer(2, -2)
+    0
 
-    >>> add_integer("one", 1)
+Should raise an exception TypeError for a:
+    >>> add_integer(None)
     Traceback (most recent call last):
+    ...
     TypeError: a must be an integer
 
-    >>> add_integer(4, "School")
+Should raise an exception TypeError for a = tuple:
+    >>> add_integer((4,5), 3)
     Traceback (most recent call last):
+    ...
+    TypeError: a must be an integer
+
+Should raise an exception TypeError for b = string:
+    >>> add_integer(7, "3")
+    Traceback (most recent call last):
+    ...
     TypeError: b must be an integer
 
-    >>> add_integer([1, 1], 1)
-    Traceback (most recent call last):
-    TypeError: a must be an integer
-
-    >>> add_integer(None, 1)
-    Traceback (most recent call last):
-    TypeError: a must be an integer
-
-    >>> add_integer(1, None)
-    Traceback (most recent call last):
-    TypeError: b must be an integer
-
-    >>> add_integer(float('inf'), 3)
-    Traceback (most recent call last):
-    OverflowError: cannot convert float infinity to integer
-
-    >>> add_integer(3 + 2j, 4)
-    Traceback (most recent call last):
-    TypeError: a must be an integer
-
-Argument Number
-===============
-
-``add_integer()`` must recieve one or more arguments; Only the first two
-arguments are used
-
-::
-
-    >>> add_integer(2)
-    100
-
-    >>> add_integer(1, 1, 1)
-    Traceback (most recent call last):
-    TypeError: add_integer() takes from 1 to 2 positional arguments but 3 were given
-
+Should raise an exception TypeError void Function:
     >>> add_integer()
     Traceback (most recent call last):
+    ...
     TypeError: add_integer() missing 1 required positional argument: 'a'
+
+Should raise an exception TypeError for infinite number:
+    >>> add_integer(float('inf'), 8)
+    Traceback (most recent call last):
+    ...
+    OverflowError: cannot convert float infinity to integer
+
+Should raise an exception ValueError:
+    >>> add_integer(float('NaN'), -2)
+    Traceback (most recent call last):
+    ...
+    ValueError: cannot convert float NaN to integer
