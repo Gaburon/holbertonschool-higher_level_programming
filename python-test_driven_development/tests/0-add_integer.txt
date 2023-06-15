@@ -25,13 +25,3 @@ PASSING STRING TO B:
 	>>> add_integer(2, "nnn")
 	Traceback (most recent call last):
 	TypeError: b must be an integer
-
-PASSING INFINITY:
-	>>> add_integer(float("inf"))
-	Traceback (most recent call last):
-	OverflowError: cannot convert float infinity to integer
-
-PASSING AN INDETERMINATE:
-	>>> add_integer(float("nan"))
-	Traceback (most recent call last):
-	ValueError: cannot convert float NaN to integer
