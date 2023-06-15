@@ -35,7 +35,7 @@ and should raise a ``TypeError`` upon recieving an invalid type
     Traceback (most recent call last):
     TypeError: a must be an integer
 
-    >>> add_integer(1, "one")
+    >>> add_integer(4, "School")
     Traceback (most recent call last):
     TypeError: b must be an integer
 
