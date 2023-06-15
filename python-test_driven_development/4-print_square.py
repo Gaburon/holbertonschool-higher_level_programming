@@ -1,24 +1,26 @@
 #!/usr/bin/python3
 """
-    Print square:
-    This module prints a square using the # char
+Definning a funtion wich print entire name properly.
 """
 
 
 def print_square(size):
     """
-    print_square - prints a square using the # char
-
+    Prints a square with the # char.
     Arguments:
-        size (int): Square size
+        size
+    Raises:
+        TypeError  (size): Size must be an integer.
+        TypeError  (size): Size must be an integer.
+        ValueError  (< 0): Size must be >= 0.
     """
-    if isinstance(size, int) is False:
+
+    if not isinstance(size, int):
         raise TypeError("size must be an integer")
     if size < 0:
         raise ValueError("size must be >= 0")
-    if size == 0:
-        print()
-    for row in range(size):
-        for column in range(size):
-            print("#", end="")
-        print()
+    if size == True:
+        raise TypeError("size must be an integer")
+    for i in range(size):
+        [print("#", end="") for j in range(size)]
+        print("")
