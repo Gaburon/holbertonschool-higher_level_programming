@@ -27,3 +27,22 @@
     300
     >>> add_integer(200.4, 100.2)
     300
+    >>> add_integer(None, 1)
+    Traceback (most recent call last):
+        ...
+    TypeError: a must be an integer
+
+    >>> add_integer(1, None)
+    Traceback (most recent call last):
+        ...
+    TypeError: b must be an integer
+
+    >>> add_integer(float('inf'), 3)
+    Traceback (most recent call last):
+        ...
+    OverflowError: cannot convert float infinity to integer
+
+    >>> add_integer(3 + 2j, 4)
+    Traceback (most recent call last):
+        ...
+    TypeError: a must be an integer
