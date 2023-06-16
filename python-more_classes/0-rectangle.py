@@ -4,7 +4,7 @@ Definning a Rectangle class.
 """
 
 
-class 0-rectangle.Rectangle:
+class Rectangle:
     """
     Representation of a Rectangle.
     """
