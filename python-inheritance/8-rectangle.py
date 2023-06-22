@@ -9,7 +9,7 @@ class Rectangle(BaseGeometry):
     Represent a rectangle using BaseGeometry
     """
 
-    def __init__(self, height, width):
+    def __init__(self, width, height):
         """Initialize new rectangle"""
 
         self.integer_validator("width", width)
