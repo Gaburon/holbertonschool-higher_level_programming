@@ -1,0 +1,69 @@
+>>> BaseGeometry = __import__('7-base_geometry').BaseGeometry
+
+>>> bg = BaseGeometry()
+>>> bg.integer_validator("checkme", 999)
+
+>>> bg = BaseGeometry()
+>>> bg.area()
+Traceback (most recent call last):
+Exception: area() is not implemented
+
+>>> bg = BaseGeometry()
+>>> bg.integer_validator("checkme", 0)
+Traceback (most recent call last):
+ValueError: checkme must be greater than 0
+
+>>> bg = BaseGeometry()
+>>> bg.integer_validator("checkme", -100)
+Traceback (most recent call last):
+ValueError: checkme must be greater than 0
+
+
+>>> bg = BaseGeometry()
+>>> bg.integer_validator("checkme", None)
+Traceback (most recent call last):
+TypeError: checkme must be an integer
+
+>>> bg = BaseGeometry()
+>>> bg.integer_validator("checkme", "hello")
+Traceback (most recent call last):
+TypeError: checkme must be an integer
+
+>>> bg = BaseGeometry()
+>>> bg.integer_validator("checkme", (4,))
+Traceback (most recent call last):
+TypeError: checkme must be an integer
+
+
+>>> bg = BaseGeometry()
+>>> bg.integer_validator("checkme", [3])
+Traceback (most recent call last):
+TypeError: checkme must be an integer
+
+
+>>> bg = BaseGeometry()
+>>> bg.integer_validator("checkme", {3, 4})
+Traceback (most recent call last):
+TypeError: checkme must be an integer
+
+
+
+>>> bg.integer_validator("invalid number", "number")
+Traceback (most recent call last):
+TypeError: invalid number must be an integer
+
+>>> bg = BaseGeometry()
+>>> bg.integer_validator()
+Traceback (most recent call last):
+TypeError: integer_validator() missing 2 required positional arguments: 'name' and 'value'
+
+
+>>> bg = BaseGeometry()
+>>> bg.integer_validator("checkme")
+Traceback (most recent call last):
+TypeError: integer_validator() missing 1 required positional argument: 'value'
+
+>>> bg = BaseGeometry()
+>>> bg.integer_validator("checkme", True)
+Traceback (most recent call last):
+TypeError: checkme must be an integer
