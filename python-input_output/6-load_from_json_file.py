@@ -1,13 +1,14 @@
 #!/usr/bin/python3
 """
-Creating a obj from an JSON File.
+    Module to create from JSON
 """
-import json
 
 
 def load_from_json_file(filename):
     """
-    Creating a obj from an JSON File.
+        creates an Object from a “JSON file”
     """
-    with open(filename) as file:
+    import json
+
+    with open(filename, encoding='utf-8') as file:
         return json.load(file)
