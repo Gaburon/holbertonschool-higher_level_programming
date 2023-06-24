@@ -1,11 +1,12 @@
 #!/usr/bin/python3
-"""The onjext is here"""
-
-
-import json
+"""Function save_to_json_file"""
 
 
 def save_to_json_file(my_obj, filename):
-    """SAVE JASON!!! HE'S NEARING THE ROAD"""
-    with open(filename, 'w', encoding="utf-8") as f:
-        return (json.dump(my_obj, f))
+    """function that writes an Object to a text file,
+    using a JSON representation"""
+
+    import json
+
+    with open(filename, "w", encoding="UTF8") as file:
+        file.write(json.dumps(my_obj))
