@@ -1,13 +1,11 @@
 #!/usr/bin/python3
-"""
-    Module to write from an object to a file
-"""
+"""The onjext is here"""
+
+
 import json
 
 
 def save_to_json_file(my_obj, filename):
-    """
-        save_to_json_file - writes my_obj to file filename
-    """
-    with open(filename, encoding='utf-8', mode='w') as file:
-        file.write(json.dumps(my_obj))
+    """SAVE JASON!!! HE'S NEARING THE ROAD"""
+    with open(filename, 'w', encoding="utf-8") as f:
+        return (json.dump(my_obj, f))
