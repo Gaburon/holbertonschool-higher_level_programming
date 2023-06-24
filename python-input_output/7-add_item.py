@@ -1,17 +1,24 @@
 #!/usr/bin/python3
-'''Module for saving argv info via json to file.'''
-import json
+"""Write a script that adds all arguments
+to a Python list, and then save them to a file:
+"""
+
+
 import os.path
 import sys
-save_to_json_file = __import__('7-save_to_json_file').save_to_json_file
-load_from_json_file = __import__('8-load_from_json_file').load_from_json_file
+from os import path
 
-file = "add_item.json"
-json_list = []
-if os.path.exists(file):
-    json_list = load_from_json_file(file)
 
-for i in range(1, len(sys.argv)):
-    json_list.append(sys.argv[i])
+load_from_json_file = __import__('6-load_from_json_file').load_from_json_file
+save_to_json_file = __import__('5-save_to_json_file').save_to_json_file
 
-save_to_json_file(json_list, file)
+elems = sys.argv
+f = "add_item.json"
+elems.pop(0)
+
+if path.exists(f) is False:
+    save_to_json_file(elems, f)
+else:
+    f_data = load_from_json_file(f)
+    f_data.extend(elems)
+    save_to_json_file(f_data, f)
