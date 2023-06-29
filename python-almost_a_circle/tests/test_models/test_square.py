@@ -100,5 +100,6 @@ class TestSquareClass(unittest.TestCase):
         representation = {'id': 4, 'x': 2, 'size': 1, 'y': 3}
         self.assertEqual(s10.to_dictionary(), representation)
 
-    if __name__ == '__main__':
-        unittest.main()
+
+if __name__ == '__main__':
+    unittest.main()
