@@ -50,6 +50,9 @@ class Base:
 
         json_string = Base.to_json_string(result)
 
+        with open(filename, mode="w", encoding="UTF-8") as file:
+            file.write(json_string)
+
     @staticmethod
     def from_json_string(json_string):
         """
@@ -60,6 +63,3 @@ class Base:
             return []
         else:
             return json.load(json_string)
-
-        with open(filename, mode="w", encoding="UTF-8") as file:
-            file.write(json_string)
