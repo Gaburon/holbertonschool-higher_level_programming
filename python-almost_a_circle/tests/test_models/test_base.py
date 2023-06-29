@@ -34,6 +34,16 @@ class TestBaseClass(unittest.TestCase):
         list_dictionaries = None
         self.assertEqual(Base.to_json_string(list_dictionaries), "[]")
 
+    def test_from_jsoon_string(self):
+        json_str = None
+        self.assertEqual(Base.from_json_string(json_str), [])
+
+        json_str = '[]'
+        self.assertEqual(Base.from_json_string(json_str), [])
+
+        json_str = '[{"id": 14}]'
+        self.assertEqual(Base.from_json_string(json_str), [{'id': 14}])
+
 
 if __name__ == '__main__':
     unittest.main()
