@@ -2,6 +2,7 @@
 """
 Module 1-Base_Class
 """
+import json
 
 
 class Base:
@@ -48,6 +49,17 @@ class Base:
             result.append(cls.to_dictionary(obj))
 
         json_string = Base.to_json_string(result)
+
+    @staticmethod
+    def from_json_string(json_string):
+        """
+        static method that returns the list of the JSON
+        string representation json_string
+        """
+        if json_string is None or json_string == "":
+            return []
+        else:
+            return json.load(json_string)
 
         with open(filename, mode="w", encoding="UTF-8") as file:
             file.write(json_string)
