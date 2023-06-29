@@ -67,5 +67,45 @@ class TestRectangleClass(unittest.TestCase):
         r7 = Rectangle(1, 2, 3, 4, 5)
         self.assertEqual(r7.__str__(), "[Rectangle] (5) 3/4 - 1/2")
 
+    def test_update_args(self):
+        r8 = Rectangle(1, 2, 3, 4, 5)
+        r8.update(89)
+        self.assertEqual(r8.__str__(), "[Rectangle] (89) 3/4 - 1/2")
+
+        r8.update(89, 12)
+        self.assertEqual(r8.__str__(), "[Rectangle] (89) 3/4 - 12/2")
+
+        r8.update(89, 12, 13)
+        self.assertEqual(r8.__str__(), "[Rectangle] (89) 3/4 - 12/13")
+
+        r8.update(89, 12, 13, 14)
+        self.assertEqual(r8.__str__(), "[Rectangle] (89) 14/4 - 12/13")
+
+        r8.update(89, 12, 13, 14, 15)
+        self.assertEqual(r8.__str__(), "[Rectangle] (89) 14/15 - 12/13")
+
+    def test_update_kwargs(self):
+        r9 = Rectangle(1, 2, 3, 4, 5)
+        r9.update(id=10)
+        self.assertEqual(r9.__str__(), "[Rectangle] (10) 3/4 - 1/2")
+
+        r9.update(id=10, width=20)
+        self.assertEqual(r9.__str__(), "[Rectangle] (10) 3/4 - 20/2")
+
+        r9.update(id=10, width=20, x=30)
+        self.assertEqual(r9.__str__(), "[Rectangle] (10) 30/4 - 20/2")
+
+        r9.update(id=10, width=20, x=30, height=40)
+        self.assertEqual(r9.__str__(), "[Rectangle] (10) 30/4 - 20/40")
+
+        r9.update(id=10, width=20, x=30, height=40, y=50)
+        self.assertEqual(r9.__str__(), "[Rectangle] (10) 30/50 - 20/40")
+
+    def test_to_dictionary(self):
+        r10 = Rectangle(1, 2, 3, 4, 5)
+        representation = {'x': 3, 'y': 4, 'id': 5, 'height': 2, 'width': 1}
+        self.assertEqual(r10.to_dictionary(), representation)
+
+
     if __name__ == '__main__':
         unittest.main()

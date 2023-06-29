@@ -19,3 +19,35 @@ class Base:
         else:
             Base.__nb_objects += 1
             self.id = Base.__nb_objects
+
+    @staticmethod
+    def to_json_string(list_dictionaries):
+        """
+        static method that returns the JSON string representation
+        of list_dictionaries
+        """
+        if list_dictionaries is None or list_dictionaries == []:
+            return "[]"
+        else:
+            return json.dumps(list_dictionaries)
+
+    @classmethod
+    def save_to_file(cls, list_objs):
+        """
+        classmethod that writes the JSON string representation
+        of list_objs to a file
+        """
+        if list_objs is None:
+            list_objs = []
+
+        class_name = cls.__name__
+        filename = class_name + ".json"
+        result = []
+
+        for obj in list_objs:
+            result.append(cls.to_dictionary(obj))
+
+        json_string = Base.to_json_string(result)
+
+        with open(filename, mode="w", encoding="UTF-8") as file:
+            file.write(json_string)

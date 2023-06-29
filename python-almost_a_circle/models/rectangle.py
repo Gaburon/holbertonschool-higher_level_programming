@@ -155,3 +155,50 @@ class Rectangle(Base):
         msg = "[Rectangle] ({}) {}/{} - {}/{}".format(self.id, self.x, self.y,
                                                       self.width, self.height)
         return msg
+
+    def update(self, *args, **kwargs):
+        """
+        method that assigns an argument (from *args or **kwargs)
+        to each attribute
+
+        Args:
+            args: list of arguments, all ints
+            kwargs: assigns a key/value argument to attributes
+        """
+        if args:
+            if len(args) >= 1:
+                self.id = args[0]
+            if len(args) == 2:
+                self.__width = args[1]
+            if len(args) == 3:
+                self.__height = args[2]
+            if len(args) == 4:
+                self.__x = args[3]
+            if len(args) == 5:
+                self.__y = args[4]
+        else:
+            for k, v in kwargs.items():
+                if k == "id":
+                    self.id = v
+                if k == "width":
+                    self.__width = v
+                if k == "height":
+                    self.__height = v
+                if k == "x":
+                    self.__x = v
+                if k == "y":
+                    self.__y = v
+
+    def to_dictionary(self):
+        """
+        Method that returns the dictionary representation of a Rectangle,
+        containing all its attributes in a specific order:
+        id, width, height, x, y
+        """
+        dict_rep = {}
+        dict_rep["x"] = self.x
+        dict_rep["y"] = self.y
+        dict_rep["id"] = self.id
+        dict_rep["height"] = self.height
+        dict_rep["width"] = self.width
+        return dict_rep
