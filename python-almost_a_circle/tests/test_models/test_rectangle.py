@@ -40,6 +40,26 @@ class TestRectangleClass(unittest.TestCase):
             Rectangle(1, 2, 3, "Holberton", 5)
         with self.assertRaises(TypeError):
             Rectangle(1, 2, 3, {4}, 5)
+        with self.assertRaises(TypeError):
+            Rectangle("1", 2)
+        with self.assertRaises(TypeError):
+            Rectangle(1, "2")
+        with self.assertRaises(TypeError):
+            Rectangle(1, 2, "3")
+        with self.assertRaises(TypeError):
+            Rectangle(1, 2, 3, "4")
+        with self.assertRaises(ValueError):
+            Rectangle(0, 1)
+        with self.assertRaises(ValueError):
+            Rectangle(1, 0)
+        with self.assertRaises(ValueError):
+            Rectangle(-1, 1)
+        with self.assertRaises(ValueError):
+            Rectangle(1, -1)
+        with self.assertRaises(ValueError):
+            Rectangle(1, 1, -1)
+        with self.assertRaises(ValueError):
+            Rectangle(1, 1, 1, -1)
 
     def test_arg_value(self):
         with self.assertRaises(ValueError):

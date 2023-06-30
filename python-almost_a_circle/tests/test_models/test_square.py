@@ -95,6 +95,22 @@ class TestSquareClass(unittest.TestCase):
         s9.update(id=10, size=20, x=30,  y=50)
         self.assertEqual(s9.__str__(), "[Square] (10) 30/50 - 20")
 
+    def test_square_savetofile_none(self):
+        ret = "[]"
+        Square.save_to_file(None)
+        with open("Square.json", "r") as file:
+            s = (file.read())
+        self.assertEqual(ret, s)
+        os.remove("Square.json")
+
+    def test_square_savetofile_empty(self):
+        ret = "[]"
+        Square.save_to_file([])
+        with open("Square.json", "r") as file:
+            s = (file.read())
+        self.assertEqual(ret, s)
+        os.remove("Square.json")
+
     def test_to_dictionary(self):
         s10 = Square(1, 2, 3, 4)
         representation = {'id': 4, 'x': 2, 'size': 1, 'y': 3}
