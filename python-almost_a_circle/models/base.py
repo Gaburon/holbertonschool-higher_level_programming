@@ -76,14 +76,15 @@ class Base:
 
     @classmethod
     def load_from_file(cls):
-        ret = []
-        try:
-            with open("{}.json".format(cls.__name__), 'r') as file:
-                str_list = file.read()
-            dict_list = cls.from_json_string(str_list)
-        except:
-            dict_list = dict()
-        for obj_dict in dict_list:
-            new_obj = cls.create(**obj_dict)
-            ret.append(new_obj)
-        return(ret)
+        """
+        Return a list of instance
+        """
+        filename = cls.__name__ + '.json'
+        if path.exists(filename) is False:
+            return []
+        with open(filename, 'r') as fd:
+            attrs_dic = cls.from_json_string(fd.read())
+            li = []
+            for i in attrs_dic:
+                li.append(cls.create(**i))
+            return li
