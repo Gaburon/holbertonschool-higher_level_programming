@@ -1,57 +1,48 @@
 #!/usr/bin/python3
 """
-    Module test for base class
+Unittest for Base Class
 """
 import unittest
 from models.base import Base
 
 
-class TestBase(unittest.TestCase):
+class TestBaseClass(unittest.TestCase):
     """
-        Test class for Base class
+    unittests for functions in Base Class
     """
-    base_1 = Base()
-    base_2 = Base()
-    base_3 = Base(5)
 
-    def test_base_create(self):
-        self.assertEqual(self.base_1.id, 1)
-    
-    def test_base_update_id(self):
-        self.assertEqual(self.base_2.id, 2)
+    def test_empty(self):
+        b1 = Base()
+        self.assertEqual(b1.id, 2)
 
-    def test_base_id(self):
-        self.assertEqual(self.base_3.id, 5)
+    def test_specific_id(self):
+        b2 = Base(14)
+        self.assertEqual(b2.id, 14)
 
-    def test_base_tojsonstringnone(self):
-        ret = "[]"
-        test_list = self.base_1.to_json_string(None)
-        self.assertEqual(ret, test_list)
+    def test_default(self):
+        b3 = Base(None)
+        self.assertEqual(b3.id, 1)
 
-    def test_base_tojsonstringempty(self):
-        ret = "[]"
-        test_list = self.base_1.to_json_string([])
-        self.assertEqual(ret, test_list)
+    def test_to_json_string(self):
+        list_dictionaries = [{'i': 1, 'j': 2}, {'x': 3, 'y': 4}]
+        self.assertEqual(Base.to_json_string(list_dictionaries),
+                         '[{"i": 1, "j": 2}, {"x": 3, "y": 4}]')
 
-    def test_base_tojsonstringdict(self):
-        test_dict = [{'id': 7}]
-        ret = "[{\"id\": 7}]"
-        self.assertEqual(self.base_1.to_json_string(test_dict), ret)
+        list_dictionaries = []
+        self.assertEqual(Base.to_json_string(list_dictionaries), "[]")
 
-    def test_base_fromjsonstringnone(self):
-        ret = []
-        test_list = self.base_1.from_json_string(None)
-        self.assertEqual(ret, test_list)
+        list_dictionaries = None
+        self.assertEqual(Base.to_json_string(list_dictionaries), "[]")
 
-    def test_base_fromjsonstringempty(self):
-        ret = []
-        test_list = self.base_1.from_json_string([])
-        self.assertEqual(ret, test_list)
+    def test_from_jsoon_string(self):
+        json_str = None
+        self.assertEqual(Base.from_json_string(json_str), [])
 
-    def test_base_fromjsonstringdict(self):
-        ret = [{'id': 7}]
-        test_dict = "[{\"id\": 7}]"
-        self.assertEqual(self.base_1.from_json_string(test_dict), ret)
+        json_str = '[]'
+        self.assertEqual(Base.from_json_string(json_str), [])
+
+        json_str = '[{"id": 14}]'
+        self.assertEqual(Base.from_json_string(json_str), [{'id': 14}])
 
 
 if __name__ == '__main__':
