@@ -44,6 +44,53 @@ class TestBaseClass(unittest.TestCase):
         json_str = '[{"id": 14}]'
         self.assertEqual(Base.from_json_string(json_str), [{'id': 14}])
 
+    def test_save_to_file(self):
+        """Test save_to_file method"""
+        r1 = Rectangle(1, 1)
+        r2 = Rectangle(2, 2)
+        Rectangle.save_to_file([r1, r2])
+        with open("Rectangle.json", "r") as file:
+            self.assertEqual(json.loads(file.read()),
+                             [r1.to_dictionary(), r2.to_dictionary()])
+        os.remove("Rectangle.json")
+
+     def test_create(self):
+        """Test create method"""
+        r1 = Rectangle(3, 5, 7, 9, 12)
+        r1_dict = r1.to_dictionary()
+        r2 = Rectangle.create(**r1_dict)
+        self.assertNotEqual(r1, r2)
+
+    def test_load_from_file(self):
+        """Test load_from_file method"""
+        r1 = Rectangle(10, 7, 2, 8, 1)
+        r2 = Rectangle(2, 4, 5, 6, 3)
+        list_rectangles_input = [r1, r2]
+
+        Rectangle.save_to_file(list_rectangles_input)
+
+        list_rectangles_output = Rectangle.load_from_file()
+
+        self.assertTrue(all(isinstance(i, Rectangle)
+                            for i in list_rectangles_output))
+
+        self.assertTrue(all(hasattr(i, 'width')
+                            for i in list_rectangles_output))
+
+        self.assertTrue(all(hasattr(i, 'height')
+                            for i in list_rectangles_output))
+
+        self.assertTrue(all(hasattr(i, 'x')
+                            for i in list_rectangles_output))
+
+        self.assertTrue(all(hasattr(i, 'y')
+                            for i in list_rectangles_output))
+
+        self.assertTrue(all(hasattr(i, 'id')
+                            for i in list_rectangles_output))
+
+        os.remove("Rectangle.json")
+
 
 if __name__ == '__main__':
     unittest.main()
