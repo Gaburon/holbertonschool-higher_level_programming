@@ -1,117 +1,292 @@
 #!/usr/bin/python3
 """
-Unittest for Rectangle Class
+    Module to test Rectangle class
 """
+
+
 import unittest
 from models.rectangle import Rectangle
+from io import StringIO
+from contextlib import redirect_stdout
+import os
 
 
-class TestRectangleClass(unittest.TestCase):
+class TestRectangle(unittest.TestCase):
     """
-    unittests for functions in Rectangle Class
+        Test class for Rectangle class
     """
+    def test_rect_1(self):
+        rect_test = Rectangle(1, 2)
+        self.assertEqual(rect_test.width, 1)
+        self.assertEqual(rect_test.height, 2)
 
-    def test_ints(self):
-        r1 = Rectangle(5, 6)
-        self.assertEqual(r1.width, 5)
-        self.assertEqual(r1.height, 6)
+    def test_rect_2(self):
+        rect_test = Rectangle(1, 2, 3)
+        self.assertEqual(rect_test.width, 1)
+        self.assertEqual(rect_test.height, 2)
+        self.assertEqual(rect_test.x, 3)
 
-        r2 = Rectangle(6, 5)
-        self.assertEqual(r2.width, 6)
-        self.assertEqual(r2.height, 5)
+    def test_rect_3(self):
+        rect_test = Rectangle(1, 2, 3, 4)
+        self.assertEqual(rect_test.width, 1)
+        self.assertEqual(rect_test.height, 2)
+        self.assertEqual(rect_test.x, 3)
+        self.assertEqual(rect_test.y, 4)
 
-        r3 = Rectangle(1, 2, 3, 4, 5)
-        self.assertEqual(r3.width, 1)
-        self.assertEqual(r3.height, 2)
-        self.assertEqual(r3.x, 3)
-        self.assertEqual(r3.y, 4)
-        self.assertEqual(r3.id, 5)
+    def test_rect_4(self):
+        rect_test = Rectangle(1, 2, 3, 4, 5)
+        self.assertEqual(rect_test.width, 1)
+        self.assertEqual(rect_test.height, 2)
+        self.assertEqual(rect_test.x, 3)
+        self.assertEqual(rect_test.y, 4)
+        self.assertEqual(rect_test.id, 5)
 
-    def test_arg_type(self):
+    def test_rect_5(self):
         with self.assertRaises(TypeError):
-            Rectangle("1", 2, 3, 4, 5)
+            Rectangle("1", 2)
         with self.assertRaises(TypeError):
-            Rectangle(1, [2], 3, 4, 5)
+            Rectangle(1, "2")
         with self.assertRaises(TypeError):
-            Rectangle(1, 2, 3, {"k": 4}, 5)
+            Rectangle(1, 2, "3")
         with self.assertRaises(TypeError):
-            Rectangle((1, 2), 3, 4, 5)
-        with self.assertRaises(TypeError):
-            Rectangle(1, 2, 3, "Holberton", 5)
-        with self.assertRaises(TypeError):
-            Rectangle(1, 2, 3, {4}, 5)
-
-    def test_arg_value(self):
+            Rectangle(1, 2, 3, "4")
         with self.assertRaises(ValueError):
-            Rectangle(0, 2, 3, 4, 5)
+            Rectangle(0, 1)
         with self.assertRaises(ValueError):
-            Rectangle(1, 0, 3, 4, 5)
+            Rectangle(1, 0)
         with self.assertRaises(ValueError):
-            Rectangle(1, -2, 3, 4, 5)
+            Rectangle(-1, 1)
         with self.assertRaises(ValueError):
-            Rectangle(-1, 2, -3, 4, 5)
+            Rectangle(1, -1)
         with self.assertRaises(ValueError):
-            Rectangle(1, 2, 3, -4, 5)
+            Rectangle(1, 1, -1)
+        with self.assertRaises(ValueError):
+            Rectangle(1, 1, 1, -1)
 
-    def test_area(self):
-        r4 = Rectangle(3, 2)
-        self.assertEqual(r4.area(), 6)
+    def test_rect_area(self):
+        test_rect = Rectangle(4, 5)
+        self.assertEqual(test_rect.area(), 20)
 
-        r5 = Rectangle(2, 10)
-        self.assertEqual(r5.area(), 20)
+    def test_rect_str(self):
+        test_rect = Rectangle(1, 2, 0, 0, 1012)
+        ret = "[Rectangle] (1012) 0/0 - 1/2"
+        self.assertEqual(test_rect.__str__(), ret)
 
-        r6 = Rectangle(8, 7, 0, 0, 12)
-        self.assertEqual(r6.area(), 56)
+    def test_rect_display(self):
+        test_rect = Rectangle(2, 2)
+        ret = "##\n##\n"
+        with redirect_stdout(StringIO()) as f:
+            test_rect.display()
+        s = f.getvalue()
+        self.assertEqual(ret, s)
 
-    def test_str_format(self):
-        r7 = Rectangle(1, 2, 3, 4, 5)
-        self.assertEqual(r7.__str__(), "[Rectangle] (5) 3/4 - 1/2")
+    def test_rect_display_x(self):
+        test_rect = Rectangle(2, 2, 2)
+        ret = "  ##\n  ##\n"
+        with redirect_stdout(StringIO()) as f:
+            test_rect.display()
+        s = f.getvalue()
+        self.assertEqual(ret, s)
 
-    def test_update_args(self):
-        r8 = Rectangle(1, 2, 3, 4, 5)
-        r8.update(89)
-        self.assertEqual(r8.__str__(), "[Rectangle] (89) 3/4 - 1/2")
+    def test_rect_display_xy(self):
+        test_rect = Rectangle(2, 2, 2, 2)
+        ret = "\n\n  ##\n  ##\n"
+        with redirect_stdout(StringIO()) as f:
+            test_rect.display()
+        s = f.getvalue()
+        self.assertEqual(ret, s)
 
-        r8.update(89, 12)
-        self.assertEqual(r8.__str__(), "[Rectangle] (89) 3/4 - 12/2")
+    def test_rect_todictionary(self):
+        test_rect = Rectangle(1, 2, 3, 4, 5)
+        ret = {'x': 3, 'y': 4, 'id': 5, 'height': 2, 'width': 1}
+        self.assertEqual(test_rect.to_dictionary(), ret)
 
-        r8.update(89, 12, 13)
-        self.assertEqual(r8.__str__(), "[Rectangle] (89) 3/4 - 12/13")
+    def test_rect_update_empty(self):
+        test_rect = Rectangle(1, 1)
+        dict_1 = test_rect.to_dictionary()
+        test_rect.update()
+        dict_2 = test_rect.to_dictionary()
+        self.assertEqual(dict_1, dict_2)
 
-        r8.update(89, 12, 13, 14)
-        self.assertEqual(r8.__str__(), "[Rectangle] (89) 14/4 - 12/13")
+    def test_rect_update_id(self):
+        test_rect = Rectangle(1, 1)
+        dict_1 = test_rect.to_dictionary()
+        test_rect.update(89)
+        dict_2 = test_rect.to_dictionary()
+        self.assertNotEqual(dict_1, dict_2)
+        self.assertEqual(test_rect.id, 89)
 
-        r8.update(89, 12, 13, 14, 15)
-        self.assertEqual(r8.__str__(), "[Rectangle] (89) 14/15 - 12/13")
+    def test_rect_update_id_w(self):
+        test_rect = Rectangle(1, 1)
+        dict_1 = test_rect.to_dictionary()
+        test_rect.update(89, 5)
+        dict_2 = test_rect.to_dictionary()
+        self.assertNotEqual(dict_1, dict_2)
+        self.assertEqual(test_rect.id, 89)
+        self.assertEqual(test_rect.width, 5)
 
-    def test_update_kwargs(self):
-        r9 = Rectangle(1, 2, 3, 4, 5)
-        r9.update(id=10)
-        self.assertEqual(r9.__str__(), "[Rectangle] (10) 3/4 - 1/2")
+    def test_rect_update_id_w_h(self):
+        test_rect = Rectangle(1, 1)
+        dict_1 = test_rect.to_dictionary()
+        test_rect.update(89, 5, 6)
+        dict_2 = test_rect.to_dictionary()
+        self.assertNotEqual(dict_1, dict_2)
+        self.assertEqual(test_rect.id, 89)
+        self.assertEqual(test_rect.width, 5)
+        self.assertEqual(test_rect.height, 6)
+   
+    def test_rect_update_id_w_h_x(self):
+        test_rect = Rectangle(1, 1)
+        dict_1 = test_rect.to_dictionary()
+        test_rect.update(89, 5, 6, 2)
+        dict_2 = test_rect.to_dictionary()
+        self.assertNotEqual(dict_1, dict_2)
+        self.assertEqual(test_rect.id, 89)
+        self.assertEqual(test_rect.width, 5)
+        self.assertEqual(test_rect.height, 6)
+        self.assertEqual(test_rect.x, 2)
+   
+    def test_rect_update_id_w_h_x_y(self):
+        test_rect = Rectangle(1, 1)
+        dict_1 = test_rect.to_dictionary()
+        test_rect.update(89, 5, 6, 2, 3)
+        dict_2 = test_rect.to_dictionary()
+        self.assertNotEqual(dict_1, dict_2)
+        self.assertEqual(test_rect.id, 89)
+        self.assertEqual(test_rect.width, 5)
+        self.assertEqual(test_rect.height, 6)
+        self.assertEqual(test_rect.x, 2)
+        self.assertEqual(test_rect.y, 3)
 
-        r9.update(id=10, width=20)
-        self.assertEqual(r9.__str__(), "[Rectangle] (10) 3/4 - 20/2")
+    def test_rect_kupdate_id(self):
+        test_rect = Rectangle(1, 1)
+        dict_1 = test_rect.to_dictionary()
+        test_rect.update(**{"id": 89})
+        dict_2 = test_rect.to_dictionary()
+        self.assertNotEqual(dict_1, dict_2)
+        self.assertEqual(test_rect.id, 89)
 
-        r9.update(id=10, width=20, x=30)
-        self.assertEqual(r9.__str__(), "[Rectangle] (10) 30/4 - 20/2")
+    def test_rect_kupdate_id_width(self):
+        test_rect = Rectangle(1, 1)
+        dict_1 = test_rect.to_dictionary()
+        test_rect.update(**{"id": 89, "width": 5})
+        dict_2 = test_rect.to_dictionary()
+        self.assertNotEqual(dict_1, dict_2)
+        self.assertEqual(test_rect.id, 89)
+        self.assertEqual(test_rect.width, 5)
 
-        r9.update(id=10, width=20, x=30, height=40)
-        self.assertEqual(r9.__str__(), "[Rectangle] (10) 30/4 - 20/40")
+    def test_rect_kupdate_id_width_height(self):
+        test_rect = Rectangle(1, 1)
+        dict_1 = test_rect.to_dictionary()
+        test_rect.update(**{"id": 89, "width": 5, "height": 6})
+        dict_2 = test_rect.to_dictionary()
+        self.assertNotEqual(dict_1, dict_2)
+        self.assertEqual(test_rect.id, 89)
+        self.assertEqual(test_rect.width, 5)
+        self.assertEqual(test_rect.height, 6)
 
-        r9.update(id=10, width=20, x=30, height=40, y=50)
-        self.assertEqual(r9.__str__(), "[Rectangle] (10) 30/50 - 20/40")
+    def test_rect_kupdate_id_width_height_x(self):
+        test_rect = Rectangle(1, 1)
+        dict_1 = test_rect.to_dictionary()
+        test_rect.update(**{"id": 89, "width": 5, "height": 6, "x": 7})
+        dict_2 = test_rect.to_dictionary()
+        self.assertNotEqual(dict_1, dict_2)
+        self.assertEqual(test_rect.id, 89)
+        self.assertEqual(test_rect.width, 5)
+        self.assertEqual(test_rect.height, 6)
+        self.assertEqual(test_rect.x, 7)
 
-    def test_to_dictionary(self):
-        r10 = Rectangle(1, 2, 3, 4, 5)
-        representation = {'x': 3, 'y': 4, 'id': 5, 'height': 2, 'width': 1}
-        self.assertEqual(r10.to_dictionary(), representation)
+    def test_rect_kupdate_id_width_height_x_y(self):
+        test_rect = Rectangle(1, 1)
+        dict_1 = test_rect.to_dictionary()
+        test_rect.update(**{"id": 89, "width": 5, "height": 6, "x": 7, "y": 8})
+        dict_2 = test_rect.to_dictionary()
+        self.assertNotEqual(dict_1, dict_2)
+        self.assertEqual(test_rect.id, 89)
+        self.assertEqual(test_rect.width, 5)
+        self.assertEqual(test_rect.height, 6)
+        self.assertEqual(test_rect.x, 7)
+        self.assertEqual(test_rect.y, 8)
 
-    def test_create(self):
-        r11 = Rectangle.create(**{'id': 1, 'width': 2, 'height': 3, 'x': 4})
-        self.assertEqual(r11.id, 1)
-        self.assertEqual(r11.width, 2)
-        self.assertEqual(r11.height, 3)
-        self.assertEqual(r11.x, 4)
+    def test_rect_create_id(self):
+        test_rect = Rectangle(1, 1)
+        new_rect = test_rect.create(**{"id": 95})
+        self.assertIsNot(test_rect, new_rect)
+        self.assertEqual(new_rect.id, 95)
 
-    if __name__ == '__main__':
-        unittest.main()
+    def test_rect_create_id_width(self):
+        test_rect = Rectangle(1, 1)
+        new_rect = test_rect.create(**{"id": 95, "width": 5})
+        self.assertIsNot(test_rect, new_rect)
+        self.assertEqual(new_rect.id, 95)
+        self.assertEqual(new_rect.width, 5)
+
+    def test_rect_create_id_width_height(self):
+        test_rect = Rectangle(1, 1)
+        new_rect = test_rect.create(**{"id": 95, "width": 5, "height": 6})
+        self.assertIsNot(test_rect, new_rect)
+        self.assertEqual(new_rect.id, 95)
+        self.assertEqual(new_rect.width, 5)
+        self.assertEqual(new_rect.height, 6)
+
+    def test_rect_create_id_width_height_x(self):
+        test_rect = Rectangle(1, 1)
+        new_rect = test_rect.create(**{"id": 95, "width": 5, "height": 6, "x": 7})
+        self.assertIsNot(test_rect, new_rect)
+        self.assertEqual(new_rect.id, 95)
+        self.assertEqual(new_rect.width, 5)
+        self.assertEqual(new_rect.height, 6)
+        self.assertEqual(new_rect.x, 7)
+
+    def test_rect_create_id_width_height_x_y(self):
+        test_rect = Rectangle(1, 1)
+        new_rect = test_rect.create(**{"id": 95, "width": 5, "height": 6, "x": 7, "y": 8})
+        self.assertIsNot(test_rect, new_rect)
+        self.assertEqual(new_rect.id, 95)
+        self.assertEqual(new_rect.width, 5)
+        self.assertEqual(new_rect.height, 6)
+        self.assertEqual(new_rect.x, 7)
+        self.assertEqual(new_rect.y, 8)
+
+    def test_rect_savetofile_none(self):
+        ret = "[]"
+        Rectangle.save_to_file(None)
+        with open("Rectangle.json", "r") as file:
+            s = (file.read())
+        self.assertEqual(ret, s)
+        os.remove("Rectangle.json")
+
+    def test_rect_savetofile_empty(self):
+        ret = "[]"
+        Rectangle.save_to_file([])
+        with open("Rectangle.json", "r") as file:
+            s = (file.read())
+        self.assertEqual(ret, s)
+        os.remove("Rectangle.json")
+
+    def test_rect_savetofile_something(self):
+        ret = '[{"x": 6, "y": 8, "id": 10, "height": 4, "width": 2}]'
+        r1 = Rectangle(2, 4, 6, 8, 10)
+        Rectangle.save_to_file([r1])
+        with open("Rectangle.json", "r") as file:
+            s = (file.read())
+        self.assertEqual(ret, s)
+        os.remove("Rectangle.json")
+
+    def test_rect_loadfromfile_nofile(self):
+        try:
+            os.remove("Rectangle.json")
+        except:
+            pass
+        test_list = Rectangle.load_from_file()
+        self.assertEqual(test_list, [])
+
+    def test_rect_loadfromfile(self):
+        r1 = Rectangle(1, 2, 3, 4, 5)
+        Rectangle.save_to_file([r1])
+        test_list = Rectangle.load_from_file()
+        self.assertEqual(test_list[0].to_dictionary(), r1.to_dictionary())
+        os.remove("Rectangle.json")
+
+if __name__ == '__main__':
+    unittest.main()
