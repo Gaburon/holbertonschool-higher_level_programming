@@ -63,3 +63,36 @@ class Base:
             return []
         else:
             return json.loads(json_string)
+
+    @classmethod
+    def create(cls, **dictionary):
+        """
+        Class method that returns an instance with all attributes already set.
+
+        Args:
+            cls: the class to create an instance of. It can be
+                Rectangle or Square
+            **dictionary: must be used as **kwargs of the method update
+        """
+        if cls.__name__ == "Rectangle":
+            dummy = cls(1, 2)
+        if cls.__name__ == "Square":
+            dummy = cls(3)
+
+        dummy.update(**dictionary)
+        return dummy
+
+    @classmethod
+    def load_from_file(cls):
+        """
+        class method that returns a list of instances
+        """
+        filename = cls.__name__ + '.json'
+        instances = []
+
+        if filename:
+            with open(filename, mode='r', encoding='UTF-8') as file:
+                json_string = cls.from_json_string(file.read())
+                for inst in json_string:
+                    instances.append(cls.create(**inst))
+        return instances

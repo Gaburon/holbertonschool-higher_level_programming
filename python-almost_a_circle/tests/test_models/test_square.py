@@ -100,6 +100,12 @@ class TestSquareClass(unittest.TestCase):
         representation = {'id': 4, 'x': 2, 'size': 1, 'y': 3}
         self.assertEqual(s10.to_dictionary(), representation)
 
+    def test_create(self):
+        s11 = Square.create(**{'id': 1, 'size': 2, 'x': 3, 'y': 4})
+        self.assertEqual(s11.id, 1)
+        self.assertEqual(s11.size, 2)
+        self.assertEqual(s11.x, 3)
+        self.assertEqual(s11.y, 4)
 
 if __name__ == '__main__':
     unittest.main()

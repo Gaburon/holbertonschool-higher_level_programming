@@ -106,5 +106,12 @@ class TestRectangleClass(unittest.TestCase):
         representation = {'x': 3, 'y': 4, 'id': 5, 'height': 2, 'width': 1}
         self.assertEqual(r10.to_dictionary(), representation)
 
+    def test_create(self):
+        r11 = Rectangle.create(**{'id': 1, 'width': 2, 'height': 3, 'x': 4})
+        self.assertEqual(r11.id, 1)
+        self.assertEqual(r11.width, 2)
+        self.assertEqual(r11.height, 3)
+        self.assertEqual(r11.x, 4)
+
     if __name__ == '__main__':
         unittest.main()
